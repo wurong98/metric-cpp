@@ -1,6 +1,9 @@
 add_executable(metric_hyperliquid
     main.cpp
     config/config_loader.cpp
+    websocket/client.cpp
+    models/order_book.cpp
+    calculator/metrics_calculator.cpp
 )
 
 target_include_directories(metric_hyperliquid PRIVATE
