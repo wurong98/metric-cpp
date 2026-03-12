@@ -1,0 +1,16 @@
+websocket:
+  url: "wss://api.hyperliquid.xyz/ws"
+  ping_interval: 30
+  reconnect_delay: 1
+  max_reconnect_attempts: 10
+
+symbol:
+  name: "BTC"
+  pair: "BTC-USD-PERP"
+
+calculator:
+  ofi_window: 10
+  depth_levels: 10
+  smoothing: 0.1
+
+log_level: "info"
