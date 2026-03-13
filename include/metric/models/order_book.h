@@ -18,6 +18,8 @@ struct OrderBook {
     double get_spread() const;
     double get_bid_depth(int levels) const;
     double get_ask_depth(int levels) const;
+    double get_weighted_bid_depth(int levels) const;  // 价格加权深度 (用于Microprice)
+    double get_weighted_ask_depth(int levels) const;
 };
 
 } // namespace metric
