@@ -17,13 +17,17 @@ Metrics MetricsCalculator::calculate(const OrderBook& book, const std::deque<Tra
     m.bid_depth = book.get_bid_depth(depth_levels_);
     m.ask_depth = book.get_ask_depth(depth_levels_);
 
-    // Microprice
-    double spread = book.get_spread();
-    double imbalance = 0.0;
-    if (m.bid_depth + m.ask_depth > 0) {
-        imbalance = (m.bid_depth - m.ask_depth) / (m.bid_depth + m.ask_depth);
+    // Microprice: 价格加权计算
+    // Microprice = (sum(Q_bid * P_ask) + sum(Q_ask * P_bid)) / (sum(Q_bid) + sum(Q_ask))
+    double weighted_bid = book.get_weighted_bid_depth(depth_levels_);
+    double weighted_ask = book.get_weighted_ask_depth(depth_levels_);
+    double total_depth = m.bid_depth + m.ask_depth;
+    double raw_microprice = 0.0;
+    if (total_depth > 0) {
+        raw_microprice = (weighted_bid + weighted_ask) / total_depth;
+    } else {
+        raw_microprice = m.mid_price;
     }
-    double raw_microprice = m.mid_price + imbalance * spread / 2.0;
 
     // EMA smoothing
     if (!initialized_) {
